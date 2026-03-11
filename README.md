@@ -1,3 +1,3 @@
 # home-server
 
-Services: PiHole - wg-easy
+Services: PiHole - wg-easy - DuckDNS
