@@ -72,6 +72,22 @@ services:
       containers:
         ipv4_address: 172.20.0.9
 
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    user: "1000:1000"
+    environment:
+      - TZ=America/Argentina/Cordoba
+    ports:
+      - "8080:80"
+    volumes:
+      - ${SHARED_FOLDER}:/srv
+      - ./filebrowser:/database
+    restart: unless-stopped
+    networks:
+      containers:
+        ipv4_address: 172.20.0.10
+
 networks:
   containers:
     ipam:
