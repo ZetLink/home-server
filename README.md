@@ -1,3 +1,3 @@
 # home-server
 
-Services: PiHole
+Services: PiHole - wg-easy
