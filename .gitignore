@@ -1,1 +1,12 @@
 *.env
+
+# Filebrowser
+/database
+/filebrowser
+
+# Jellyfin
+/library
+
+# PiHole
+/etc-dnsmasq.d
+/etc-pihole
