@@ -6,7 +6,7 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       - "80:80/tcp"
-      - "443:${ENTRY_PH}/tcp"
+      - "443:443/tcp"
       - "67:67/udp"
     environment:
       TZ: 'America/Argentina/Cordoba'
@@ -58,20 +58,6 @@ services:
       - LOG_FILE=false #optional
     restart: unless-stopped
 
-  homepage:
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
-    ports:
-      - 3000:3000
-    volumes:
-      - /path/to/config:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
-    networks:
-      containers:
-        ipv4_address: 172.20.0.9
-
   filebrowser:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
@@ -87,6 +73,27 @@ services:
     networks:
       containers:
         ipv4_address: 172.20.0.10
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Argentina/Cordoba
+    volumes:
+      - ./library:/config
+      - ${SHARED_FOLDER}/Series:/data/tvshows
+      - ${SHARED_FOLDER}/Peliculas:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    restart: unless-stopped
+    networks:
+      containers:
+        ipv4_address: 172.20.0.11
 
 networks:
   containers:
